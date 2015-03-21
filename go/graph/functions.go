@@ -18,12 +18,12 @@ const (
 // on a bidirectional edge, because any vertex dfs is
 // recursing on is marked as visited and won't be visited
 // again anyway.
-func (g *Graph) dfs(node *node, finishList *[]Node) {
+func (g *Graph) DFS(node *node, finishList *[]Node) {
 	node.state = seen
 	for _, edge := range node.edges {
 		if edge.end.state == unseen {
 			edge.end.parent = node
-			g.dfs(edge.end, finishList)
+			g.DFS(edge.end, finishList)
 		}
 	}
 	*finishList = append(*finishList, node.container)
@@ -76,7 +76,7 @@ func (g *Graph) TopologicalSort() []Node {
 	// sort preorder (first jacket, then shirt)
 	for _, node := range g.nodes {
 		if node.state == unseen {
-			g.dfs(node, &sorted)
+			g.DFS(node, &sorted)
 		}
 	}
 	// now make post order for correct sort (jacket follows shirt). O(V)
